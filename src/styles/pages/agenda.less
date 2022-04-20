@@ -1,39 +1,59 @@
+@import "../variables";
+@import '../../../node_modules/antd/lib/style/color/colors.less';
+
 .agenda-main{
+  position: relative;
+  
+  .icon-add{
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 42px;
+    color: #003366;
+    transition-duration: .5s;     
 
-  .event-date{
-
-    .date{
-      margin-left: 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      p{
-        width: 30%;
-        min-width: 200px;
-        margin: 5px 0;
-      };
+    &:hover{
+      color: lighten(#003366, 15%);
+      transition-duration: .5s;     
     };
+  };
 
-    .event-presentation{
-      display: flex;
-      padding-top: 30px;
+  .year{
+    padding-top: 20px;
 
-      p {
-        width: 70%;
-        padding: 0 20px;
-        text-align: justify
+    .event-date{
+      .date{
+        margin-left: 20px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+  
+        p{
+          width: 30%;
+          min-width: 200px;
+          margin: 5px 0;
+        };
       };
-
-      .div-img{
-        width: 30%;
-        text-align: center;
-
-        img{
-          width: 40%;
+  
+      .event-presentation{
+        display: flex;
+        padding-top: 30px;
+  
+        p {
+          width: 70%;
+          padding: 0 20px;
+          text-align: justify
+        };
+  
+        .div-img{
+          width: 30%;
+          text-align: center;
+  
+          img{
+            width: 40%;
+          };
         };
       };
     };
   };
-
 };

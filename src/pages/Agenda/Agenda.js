@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
-import { url, Card, Collapse } from "./_index.js";
+import { url, BasicModal, CreateEvent } from "./_index.js";
+import {Collapse, Card} from "antd";
 
 const Panel = Collapse.Panel;
 
-
 const Agenda = () => {
+
+  const modalRef = useRef();
 
   const [events, setEvents] = useState([]);
   const [eventsYear, setEventsYear] = useState([]);
   const date = new Date();
   const thisYear = date.getFullYear();
-  const years = [2023, 2022, 2021, 2020,  2019, 2018];
+  const years = [2026, 2025, 2024, 2023, 2022, 2021, 2020,  2019, 2018];
   const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
 
@@ -31,17 +33,19 @@ const Agenda = () => {
       console.log("error:", err);
     })
   },[]);
-
-  console.log(events);
+console.log(events);
+  const showModal = () => {
+    modalRef.current.showModal()
+  };
 
   return (
-    <div className='agenda-main'>
-      <Card className="gx-card" title="Agenda">
-        {years.map(year => (
+      <Card className="gx-card agenda-main " title="Agenda">
+      <i className="icon icon-add" onClick={showModal} />
+        {years.map((year, i) => (
           eventsYear.includes(year) &&
-          <div>
+          <div className='year' key={year+1}>
             <h3>{year} </h3>
-            <Collapse defaultActiveKey={['1']} key={year} >
+            <Collapse defaultActiveKey={i}  >
               {events.map(event => (
                 new Date(event.show[0].startDate).getFullYear() === year &&
                 <Panel header={event.title} key={event._id}>
@@ -80,8 +84,8 @@ const Agenda = () => {
             </Collapse>
           </div>
         ))}
+        <BasicModal ref={modalRef} content={<CreateEvent />} />
     </Card>
-    </div>
   )
 };
 
