@@ -14,6 +14,8 @@ class ThreeSizes extends Component {
 
   render() {
     const {size} = this.state;
+
+    console.log(size);
     return (
       <Card className="gx-card" title="Three Sizes">
         <Radio.Group className="gx-mb-2" value={size} onChange={this.handleSizeChange}>

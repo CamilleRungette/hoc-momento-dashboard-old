@@ -33,7 +33,7 @@ const Agenda = () => {
       console.log("error:", err);
     })
   },[]);
-console.log(events);
+
   const showModal = () => {
     modalRef.current.showModal()
   };
@@ -50,7 +50,7 @@ console.log(events);
                 new Date(event.show[0].startDate).getFullYear() === year &&
                 <Panel header={event.title} key={event._id}>
                   {event.show.map(date => (
-                    <div className='event-date'>
+                    <div key={Math.floor(Math.random() * 10000)} className='event-date'>
                       <div className='date'>
                         <p>
                           {new Date(date.startDate).getDate() === new Date(date.endDate).getDate() ?
