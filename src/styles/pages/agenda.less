@@ -59,5 +59,59 @@
 
   .create-event{
     width: 40vw;
+    padding: 0 2rem;
+    
+    .first-line-div{
+      width: 38vw;
+      position: relative;
+      .range-picker {
+        width: 80%;
+      };
+  
+      .delete-date{
+        position: absolute;
+        right: 0;
+        top: .5rem;
+      };
+    };
+
+    .address-space{
+      width: 100% !important;
+      display: flex;
+      justify-content: space-between;
+
+      .input{
+        width: 18vw;
+      };
+    };
+
+    .upload-picture{
+      position: relative;
+      padding-top: 3rem;
+
+      .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      };
+
+      .label{
+        padding: 2.5rem 2rem;
+        border: 1px rgb(214, 214, 214) dashed;
+        background-color: rgb(243, 243, 243);
+        border-radius: 5px;
+        cursor: pointer;
+        position: relative;
+
+        .plus-icon{
+          position: absolute;
+          top: 1.5rem;
+          left: 3rem;
+        };
+      };
+    };
   };
 };

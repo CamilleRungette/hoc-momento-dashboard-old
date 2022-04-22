@@ -24,7 +24,7 @@ const Agenda = () => {
         setEvents(res.data);
         let array = [];
         res.data.forEach(event => {
-          array.push(new Date(event.show[0].startDate).getFullYear());
+          array.push(new Date(event.dates[0].startDate).getFullYear());
         });
         setEventsYear(array);
       };
@@ -47,9 +47,9 @@ const Agenda = () => {
             <h3>{year} </h3>
             <Collapse defaultActiveKey={i}  >
               {events.map(event => (
-                new Date(event.show[0].startDate).getFullYear() === year &&
+                new Date(event.dates[0].startDate).getFullYear() === year &&
                 <Panel header={event.title} key={event._id}>
-                  {event.show.map(date => (
+                  {event.dates.map(date => (
                     <div key={Math.floor(Math.random() * 10000)} className='event-date'>
                       <div className='date'>
                         <p>

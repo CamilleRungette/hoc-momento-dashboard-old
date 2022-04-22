@@ -1,64 +1,62 @@
 import React, { useState } from 'react';
-import {Button, Form, Input, DatePicker, Space, Card,  Modal, Upload} from "antd";
+import {Button, Form, Input, DatePicker, Space} from "antd";
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-const {MonthPicker, RangePicker, WeekPicker} = DatePicker;
+const {RangePicker} = DatePicker;
 
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
 
 const CreateEvent = () => {
-
-  const [picture, setPicture] = useState({
-    previewVisible: false,
-    previewImage: '',
-    fileList: [{
-      uid: -1,
-      name: '',
-      status: '',
-    }],
-  })
-  const [event, setEvent] = useState({
-    city: "",
-    address: "",
-    place: ""
-  });
-
-  const saveInfo = values => {
-    console.log(values);
+  
+  const [dates, setDates] = useState([]);
+  const [picture, setPicture] = useState();
+  
+  function onChange(value, dateString, key) {
+    let array = [... dates];
+    array[key] = {startDate: dateString[0], endDate: dateString[1]};
+    setDates(array);
+  };
+  
+  const fileSelectedHandler = e => {
+    setPicture(e.target.files[0]);
   };
 
-  const handleCancel = () => setPicture({...picture, previewVisible: false});
+  const saveInfo = values => {
+    let newEvent = {
+      title: values.title, 
+      description: values.description,
+      dates: values.dates.map(date => {
+        return {
+          address: date.address, 
+          place: date.address, 
+          city: date.city, 
+        }
+      }),
+    };
 
-  const handlePreview = (file) => {
-    console.log(file);
-    setPicture({ ... picture,
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
+    newEvent.dates.forEach((date, i) => {
+      date.startDate = dates[i].startDate;
+      date.endDate = dates[i].endDate;
     });
   };
 
-  const handleChange = ({fileList}) => setPicture({...picture, fileList: fileList});
   
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div className="ant-upload-text">Upload</div>
-    </div>
-  );
-
-  console.log(event);
   return (
     <div  className='create-event'>
       <h3> Créer un événement </h3>
     
       <Form name="dynamic_form_nest_item" className='form-create-event'  onFinish={saveInfo} >
-        <FormItem rules={[{required: true, message: 'Please input your username!\'}'}]} name="title">
+        <FormItem className='input'
+        // rules={[{required: true, message: 'Please input your username!\'}'}]} 
+        name="title">
           <Input
               placeholder="Titre" />
         </FormItem>
-        <FormItem rules={[{required: true, message: 'Please input your username!\'}'}]} name="description">
+        <FormItem 
+        // rules={[{required: true, message: 'Please input your username!\'}'}]} 
+        name="description">
           <TextArea rows={4} placeholder="description" />
         </FormItem>
 
@@ -71,24 +69,33 @@ const CreateEvent = () => {
                 <Form.Item
                 {...restField}
                 name={[name, 'date']}
-                rules={[{ required: true, message: 'Missing first name' }]}
+                className="first-line-div"
                 >
-                  <RangePicker className="gx-mb-3 gx-w-75" />
-                  <MinusCircleOutlined onClick={() => remove(name)} />
+                  <RangePicker className="range-picker"
+                   showTime={{format: 'HH:mm'}}
+                   format="YYYY-MM-DD HH:mm"
+                   placeholder={['Début', 'Fin']}
+                   onChange={(value, dateString) => onChange(value, dateString, key)}
+                  />
+
+                  <MinusCircleOutlined className='delete-date' onClick={() => remove(name)} />
                 </Form.Item>
-                <Space  >
+                <Space className='address-space' >
                   <Form.Item
                     {...restField}
                     name={[name, 'place']}
                     rules={[{ required: true, message: 'Missing first name' }]}
+                    className="input"
                   >
                     <Input placeholder="Lieu" />
                   </Form.Item>
+
                   <Form.Item
                     {...restField}
                     name={[name, 'city']}
                     rules={[{ required: true, message: 'Missing last name' }]}
-                  >
+                    className="input"
+                    >
                     <Input placeholder="Ville" />
                   </Form.Item>
                  
@@ -104,35 +111,28 @@ const CreateEvent = () => {
             ))}
             <Form.Item>
               <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                Add field
+                Ajouter une date
               </Button>
             </Form.Item>
             </>
           )}
         </Form.List>
 
+        <h4>Télécharger une photo</h4> 
 
-        <Card title="UploadPicture" className="gx-card clearfix">
-          <Upload
-            action="//jsonplaceholder.typicode.com/posts/"
-            listType="picture-card"
-            fileList={picture.fileList}
-            onPreview={handlePreview}
-            onChange={handleChange}
-          >
-            {picture.fileList.length >= 3 ? null : uploadButton}
-          </Upload>
-          <Modal visible={picture.previewVisible} footer={null} onCancel={handleCancel}>
-            <img alt="example" style={{width: '100%'}} src={picture.previewImage}/>
-          </Modal>
-        </Card>
+        <div className="upload-picture">
+          <input onChange={fileSelectedHandler} type="file" name="file" id="file" className="inputfile" />
+          <label htmlFor="file" className='label'>
+          <PlusOutlined className='plus-icon' />
+            Ajouter</label>
+        </div>
 
-        <FormItem>
+        <FormItem  className='button-div'>
           <Button className="gx-mb-0"
                   type="primary"
                   htmlType="submit"
           >
-            Log in
+            Créer
           </Button>
         </FormItem>
 
