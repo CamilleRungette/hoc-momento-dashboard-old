@@ -124,7 +124,6 @@ const App = () => {
   }, [layoutType, navStyle]);
 
   const currentAppLocale = AppLocale["fr"];
-  console.log(currentAppLocale);
 
   return (
     <ConfigProvider locale={currentAppLocale.antd} direction={isDirectionRTL ? 'rtl' : 'ltr'}>
