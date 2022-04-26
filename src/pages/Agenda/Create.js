@@ -32,7 +32,12 @@ const CreateEvent = ({closeModal}) => {
     setPicture(formData);
 
     setPictureName(e.target.files[0].name);
-  };  
+  }; 
+  
+  const deletePicture = () => {
+    setPicture();
+    setPictureName();
+  };
 
   const openNotificationWithIcon = (type, title, message) => {
     notification[type]({
@@ -63,7 +68,7 @@ const CreateEvent = ({closeModal}) => {
       openNotificationWithIcon("warning", "Attention", 'Les champs "Titre" et "Dates" (début et fin) sont obligatoires')
     } else {
       if (picture) {  
-        axios.post(process.env.REACT_APP_CLOUDINARY_URL, picture)
+        axios.post("https://api.cloudinary.com/v1_1/ds5zdmfj2/image/upload", picture)
         .then(res => {
           newEvent.photo = res.data.secure_url;
           console.log(newEvent);
@@ -187,7 +192,7 @@ const CreateEvent = ({closeModal}) => {
           </div>
         :
         <div>
-          <p>{pictureName} </p>
+          <p>{pictureName} <i className='icon icon-trash' onClick={deletePicture} ></i> </p>
         </div>
           }
 
