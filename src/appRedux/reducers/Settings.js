@@ -12,14 +12,7 @@ const initialSettings = {
   layoutType: LAYOUT_TYPE_FULL,
   themeType: THEME_TYPE_SEMI_DARK,
   themeColor: '',
-
   isDirectionRTL: false,
-  locale: {
-    languageId: 'french',
-    locale: 'fr',
-    name: 'French',
-    icon: 'fr'
-  }
 };
 
 const SettingsReducer = (state = initialSettings, action) => {

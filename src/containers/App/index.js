@@ -66,7 +66,6 @@ const setNavStyle = (navStyle) => {
 };
 
 const App = () => {
-  const locale = useSelector(({settings}) => settings.locale);
   const navStyle = useSelector(({settings}) => settings.navStyle);
   const layoutType = useSelector(({settings}) => settings.layoutType);
   const themeType = useSelector(({settings}) => settings.themeType);
@@ -90,9 +89,8 @@ const App = () => {
   }, [isDirectionRTL]);
 
   useEffect(() => {
-    if (locale)
-      document.documentElement.lang = locale.locale;
-  }, [locale]);
+      document.documentElement.lang = "fr-FR";
+  }, []);
 
   useEffect(() => {
     if (themeType === THEME_TYPE_DARK) {
@@ -125,7 +123,8 @@ const App = () => {
     setNavStyle(navStyle);
   }, [layoutType, navStyle]);
 
-  const currentAppLocale = AppLocale[locale.locale];
+  const currentAppLocale = AppLocale["fr"];
+  console.log(currentAppLocale);
 
   return (
     <ConfigProvider locale={currentAppLocale.antd} direction={isDirectionRTL ? 'rtl' : 'ltr'}>
