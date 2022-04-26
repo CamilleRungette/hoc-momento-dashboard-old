@@ -24,7 +24,7 @@ const Agenda = () => {
         setEvents(res.data);
         let array = [];
         res.data.forEach(event => {
-          array.push(new Date(event.dates[0].startDate).getFullYear());
+          array.push(new Date(event?.dates[0].startDate).getFullYear());
         });
         setEventsYear(array);
       };
@@ -36,6 +36,10 @@ const Agenda = () => {
 
   const showModal = () => {
     modalRef.current.showModal()
+  };
+
+  const closeModal = () => {
+    modalRef.current.closeModal();
   };
 
   return (
@@ -84,7 +88,7 @@ const Agenda = () => {
             </Collapse>
           </div>
         ))}
-        <BasicModal ref={modalRef} content={<CreateEvent />} />
+        <BasicModal ref={modalRef} content={<CreateEvent closeModal={closeModal} />} />
     </Card>
   )
 };

@@ -31,6 +31,7 @@ import AppSidebar from "./AppSidebar";
 const {Content, Footer} = Layout;
 
 const getContainerClass = (navStyle) => {
+  console.log(navStyle);
   switch (navStyle) {
     case NAV_STYLE_DARK_HORIZONTAL:
       return "gx-container-wrap";
@@ -76,6 +77,7 @@ const getNavStyles = (navStyle) => {
 
 const MainApp = () => {
   const {navStyle} = useSelector(({settings}) => settings);
+  console.log(navStyle);
   const match = useRouteMatch();
   const dispatch = useDispatch();
 
@@ -90,7 +92,7 @@ const MainApp = () => {
       <AppSidebar navStyle={navStyle}/>
       <Layout>
         {getNavStyles(navStyle)}
-        <Content className={`gx-layout-content ${getContainerClass(navStyle)} `}>
+        <Content className={`gx-layout-content `}>
           <App match={match}/>
           <Footer>
             <div className="gx-layout-footer-content">
